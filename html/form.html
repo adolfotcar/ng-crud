@@ -1,0 +1,66 @@
+<label class="col-sm-12 top-form">
+	<h3>{{ 'ORDER_DETAILS'|translate }}</h3>
+</label>
+<div>
+	<div class="col-sm-1 mg-btm-px-40">
+		<div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    		<i class="fa fa-ellipsis-v"></i>
+	    	</button>
+	    	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+	    		<li ng-show="verifyPermission('sale-orders', 'POST') || verifyPermission('sale-orders', 'PUT')">
+	    			<button type="submit" class="btn-transparent" form="form"><i class="fa fa-floppy-o"></i> {{ 'FORM_SAVE'|translate }}</button>
+	    		</li>
+	    		<li x-db-delete backend="sale-orders/{{data.id}}" redirect="/sale-orders" caption="{{ 'DELETE'|translate }}" ng-show="editing"></li>
+	    		<li class="divider"></li>
+	    		<li><a ng-href="/#/sale-orders/"><i class="fa fa-undo"></i> {{ 'RETURN'|translate }} {{ 'TO'|translate }} {{ 'SALE_ORDERS'|translate }}</a></li>
+	    	</ul>
+		</div>
+	</div>
+	<section ng-init="tab=1">
+		<ul class="nav nav-tabs">
+			<li ng-class="{active:tab==1}"><a href ng-click="tab=1">{{ 'INFORMATION'|translate }}</a></li>
+			<li ng-class="{active:tab==2}" ng-show="editing"><a href ng-click="tab=2">{{ 'ITEMS'|translate }}</a></li>
+		</ul>
+	</section>
+	<div class="col-sm-12 inner-tab" ng-show="tab==1">
+		<div class="col-lg-12 alert alert-warning ng-binding" ng-hide="editing">
+			{{ 'CREATE_ORDER_WARNING' | translate }}
+		</div>
+		<form ng-submit="save(data)" class="form-horizontal" id="form">
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{ 'ORDER_NUMBER' | translate }}:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" ng-model="data.order_number" name="order_number">
+				</div>	
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{ 'CUSTOMER' | translate }}:</label>
+				<div class="col-sm-10">
+					<x-db-select backend='customers' field-bind='customer_id' text-placeholder="{{ 'TYPE_SEARCH_CUSTOMERS' | translate }}" id-name="data.customer_id" name="{{ data.customer.name }}"></x-db-select>
+				</div>	
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{ 'ORDER_DATE' | translate }}:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="data.order_date" ng-focus="dt1.opened=true"  is-open="dt1.opened" datepicker-options="dateOptions" ng-required="true" close-text="{{ 'CLOSE'|translate }}" clear-text="{{ 'CLEAR'|translate }}" current-text="{{ 'TODAY'|translate }}"/>
+				</div>	
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{ 'DELIVERY_DATE' | translate }}:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="data.delivery_date" ng-focus="dt2.opened=true"  is-open="dt2.opened" datepicker-options="dateOptions" ng-required="true" close-text="{{ 'CLOSE'|translate }}" clear-text="{{ 'CLEAR'|translate }}" current-text="{{ 'TODAY'|translate }}"/>
+				</div>	
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{ 'OBSERVATION' | translate }}:</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" ng-model="data.observation"></textarea>
+				</div>	
+			</div>
+		</form>
+	</div>
+	<div class="col-sm-12 inner-tab" ng-show="tab==2">
+		<div x-db-table-crud backend='sale-orders/{{data.id}}/items' parent-id="{{ data.id }}" limit=10 page=1 last_page=1 modal-url='app/templates/pages/sale-orders/items-form.html' table-url='app/templates/pages/sale-orders/items-table.html' top-title="{{ 'ORDER_ITEMS' | translate }}"></div>
+	</div>
+</div>

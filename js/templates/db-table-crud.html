@@ -1,0 +1,39 @@
+<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" ng-class="{'modal-lg': large}">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">{{ topTitle | translate }}</h4>
+			</div>
+			<div class="modal-body" ng-include="modalUrl">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-sm-12 mg-tp-px-20">
+	<div class="col-sm-9" ng-hide="hideAdd">
+		<a data-toggle="modal" data-target=".modal" ng-href="{{ editUrl }}" class="btn btn-primary" ng-click="openNew()">
+			<i class="fa fa-plus"></i> {{ 'ADD_NEW' | translate }}
+		</a>
+	</div>
+	<form class="col-sm-3 input-group" ng-submit="search(query)">
+		<input type="text" class="form-control" ng-model="query">
+		<span class="input-group-addon btn" ng-click="search(query)">
+			<i class="fa fa-search"></i>
+		</span>
+	</form>
+	<div ng-include="tableUrl"></div>
+	<nav class="no-print" ng-show="(!searching)&&(limit)">
+		 <ul class="pagination">
+		   <li><span aria-hidden="true" ng-click="paginate('first')"><i class="fa fa-fast-backward"></i></span></li>
+		   <li><span aria-hidden="true" ng-click="paginate(-1)"><i class="fa fa-play fa-flip-horizontal"></i></span></li>
+		   <li><span aria-hidden="true" ng-click="paginate(+1)"><i class="fa fa-play"></i></span></li>
+		   <li><span aria-hidden="true" ng-click="paginate('last')"><i class="fa fa-fast-forward"></i></span></li>
+		 </ul>
+	</nav>
+	<nav class="no-print" ng-if="searching">
+		 <ul class="pagination">
+		   <li><span aria-hidden="true" ng-click="quitSearch()"><i class="fa fa-stop"> {{ 'QUIT_SEARCH' | translate }}</i></span></li>
+		 </ul>
+	</nav>
+</div>

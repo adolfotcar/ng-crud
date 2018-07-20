@@ -1,0 +1,23 @@
+<form ng-submit="save(modal, true)" id="form">
+	<div class="form-group">
+		<label class="control-label">{{ 'PRODUCT' | translate }}:</label>
+		<x-db-select backend='sale-orders/{{parentId}}/search-products' field-bind='product_id' text-placeholder="{{ 'TYPE_SEARCH_PRODUCTS' | translate }}" id-name="{{ modal.product_id }}" name="{{ modal.product.name }}"></x-db-select>
+	</div>
+	<div class="form-group">
+		<label class="control-label">{{ 'PRICE' | translate }}:</label>
+		<p class="input-group">
+			<span class="input-group-addon">
+				{{ $root.settings.currency_symbol }}
+			</span>
+			<input type="number" ng-model="modal.price" class="form-control" name="price" step="0.01">
+		</p>
+	</div>
+	<div class="form-group">
+		<label class="control-label">{{ 'QUANTITY' | translate }}:</label>
+		<input type="number" ng-model="modal.quantity" class="form-control" name="quantity" step="0.01">
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-success">{{ "FORM_SAVE" | translate }}</button>
+		<button type="button" class="btn btn-primary" ng-click="saveAndAdd(product)">{{ "FORM_SAVE_ADD" | translate }}</button>
+	</div>
+</form>

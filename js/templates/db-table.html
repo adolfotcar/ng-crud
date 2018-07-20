@@ -1,0 +1,32 @@
+<div class="col-sm-12 mg-tp-px-20">
+	<div class="col-sm-9" ng-hide="(parentId)||(modalUrl)||(hideAdd)">
+		<a ng-href="{{ editUrl }}" class="btn btn-primary" >
+			<i class="fa fa-plus"></i> {{ 'ADD_NEW' | translate }}
+		</a>
+	</div>
+	<form class="col-sm-3 input-group" ng-submit="search(query)" ng-hide="parentId">
+		<input type="text" class="form-control" ng-model="query" ng-keyup="searchKu($event)">
+		<span class="input-group-addon btn" ng-click="search(query)">
+			<i class="fa fa-search"></i>
+		</span>
+	</form>
+	<div class="col-sm-12 splash-between-pages" ng-show="loading">
+		<div>
+			<i class="fa fa-spinner fa-spin"></i> Loading
+		</div>
+	</div>
+	<div ng-include="tableUrl"></div>
+	<nav class="no-print" ng-show="(!searching)&&(limit)">
+		 <ul class="pagination">
+		   <li><span aria-hidden="true" ng-click="paginate('first')"><i class="fa fa-fast-backward"></i></span></li>
+		   <li><span aria-hidden="true" ng-click="paginate(-1)"><i class="fa fa-play fa-flip-horizontal"></i></span></li>
+		   <li><span aria-hidden="true" ng-click="paginate(+1)"><i class="fa fa-play"></i></span></li>
+		   <li><span aria-hidden="true" ng-click="paginate('last')"><i class="fa fa-fast-forward"></i></span></li>
+		 </ul>
+	</nav>
+	<nav class="no-print" ng-if="searching">
+		 <ul class="pagination">
+		   <li><span aria-hidden="true" ng-click="quitSearch()"><i class="fa fa-stop"> {{ 'QUIT_SEARCH' | translate }}</i></span></li>
+		 </ul>
+	</nav>
+</div>
