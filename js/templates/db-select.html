@@ -1,6 +1,6 @@
 <ui-select ng-model="select.selected" on-select="selected($select.selected.id)">
 	<ui-select-match placeholder="{{ textPlaceholder }}">
-		<span ng-bind="$select.selected.name"></span>
+		<span>{{ name }}</span>
 	</ui-select-match>
 	<ui-select-choices repeat="item in options | filter:$select.search track by item.id" refresh="search($select.search)" refresh-delay="0">
 		<span ng-bind="item.name"></span>
